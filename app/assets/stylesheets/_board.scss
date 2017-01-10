@@ -1,0 +1,37 @@
+.kanbanboard {
+  margin-bottom: 30px;
+  &::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+}
+
+.kanbanboard-header {
+  width: 100%;
+  text-align: center;
+  background-color: lightblue;
+  padding: 10px 0;
+  border: 1px solid black;
+}
+
+.kanbanboard-column {
+  float: left;
+  background-color: lightgray;
+  border: 1px solid black;
+}
+
+.kanbanboard-column-header {
+  text-align: center;
+  padding: 5px 0;
+  border-bottom: 1px solid black;
+}
+
+.kanbanboard-card {
+  margin: 10px;
+  padding: 5px;
+  background-color: lightgoldenrodyellow;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+}

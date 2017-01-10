@@ -19,5 +19,5 @@
   <%= @card.board_id %>
 </p>
 
-<%= link_to 'Edit', edit_card_path(@card) %> |
-<%= link_to 'Back', cards_path %>
+<%= link_to 'Edit', edit_board_card_path(@board,@card) %> |
+<%= link_to 'Back', board_cards_path(@board) %>

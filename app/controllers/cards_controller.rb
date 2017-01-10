@@ -1,10 +1,11 @@
 class CardsController < ApplicationController
   before_action :set_card, only: [:show, :edit, :update, :destroy]
+  before_action :set_board
 
   # GET /cards
   # GET /cards.json
   def index
-    @cards = Card.all
+    @cards = Card.where(board: @board)
   end
 
   # GET /cards/1
@@ -25,10 +26,11 @@ class CardsController < ApplicationController
   # POST /cards.json
   def create
     @card = Card.new(card_params)
+    @card.board_id = @board.id
 
     respond_to do |format|
       if @card.save
-        format.html { redirect_to @card, notice: 'Card was successfully created.' }
+        format.html { redirect_to board_card_path(@board,@card), notice: 'Card was successfully created.' }
         format.json { render :show, status: :created, location: @card }
       else
         format.html { render :new }
@@ -42,7 +44,7 @@ class CardsController < ApplicationController
   def update
     respond_to do |format|
       if @card.update(card_params)
-        format.html { redirect_to @card, notice: 'Card was successfully updated.' }
+        format.html { redirect_to board_card_path(@board,@card), notice: 'Card was successfully updated.' }
         format.json { render :show, status: :ok, location: @card }
       else
         format.html { render :edit }
@@ -56,7 +58,7 @@ class CardsController < ApplicationController
   def destroy
     @card.destroy
     respond_to do |format|
-      format.html { redirect_to cards_url, notice: 'Card was successfully destroyed.' }
+      format.html { redirect_to board_cards_path(@board), notice: 'Card was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -69,6 +71,10 @@ class CardsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def card_params
-      params.require(:card).permit(:title, :status, :board_id)
+      params.require(:card).permit(:title, :status)
+    end
+
+    def set_board
+      @board = Board.find(params[:board_id])
     end
 end

@@ -1,9 +1,51 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @board.title %>
-</p>
+<div class="kanbanboard">
+  <div class="kanbanboard-header">
+    <strong><%= @board.title %></strong>
+    (<%= link_to 'Edit', edit_board_path(@board) %>)
+  </div>
 
-<%= link_to 'Edit', edit_board_path(@board) %> |
-<%= link_to 'Back', boards_path %>
+  <%
+    # get count of different states of kanban board
+    arrCardsStatus = Array.new
+    @cards.each do |card|
+      arrCardsStatus.push(card.status)
+    end
+    arrCardsStatus = arrCardsStatus.uniq
+    if arrCardsStatus.count != 0
+      columnWidth = 100/arrCardsStatus.count
+    end
+  %>
+
+  <% arrCardsStatus.count.times do |i| %>
+
+    <div class="kanbanboard-column" style="width: <%= columnWidth %>%">
+
+        <div class="kanbanboard-column-header">
+            <strong><%= arrCardsStatus.at(i) %></strong>
+        </div>
+
+        <% @cards.where(status: arrCardsStatus.at(i)).each do |card| %>
+
+            <div class="kanbanboard-card">
+                <p>
+                  <%= card.title %>
+                </p>
+                <p>
+                    (<%= link_to 'Show', board_card_path(card.board,card) %> |
+                    <%= link_to 'Edit', edit_board_card_path(card.board,card) %> |
+                    <%= link_to 'Destroy', board_card_path(card.board,card), method: :delete, data: { confirm: 'Are you sure?' } %>)
+                </p>
+            </div>
+
+        <% end %>
+    </div>
+
+  <% end %>
+</div>
+
+<p>
+  <%= link_to 'Add new card', new_board_card_path(@board) %><br>
+  <%= link_to 'Back', boards_path %>
+</p>

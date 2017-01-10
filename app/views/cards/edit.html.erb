@@ -1,6 +1,6 @@
 <h1>Editing Card</h1>
 
-<%= render 'form', card: @card %>
+<%= render 'form', card: @card, board: @board %>
 
-<%= link_to 'Show', @card %> |
-<%= link_to 'Back', cards_path %>
+<%= link_to 'Show', board_card_path(@board,@card) %>
+<%= link_to 'Back', board_cards_path(@board) %>

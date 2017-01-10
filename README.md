@@ -20,6 +20,8 @@ is deleted.  Delete a board and study the log file: how are the
 cards deleted? Does Rails use referential integrity in the
 database?
 
+has_many :cards, dependent: :destroy
+dadurch werden die Karten automatisch mit gelöscht
 
 === Nested Ressources === 
 
@@ -31,6 +33,18 @@ routes`. Now change `config/routes.rb` to
     end
 
 How do the URLs change?
+
+Auf die Karten kann nun folgendermaßen zugegriffen werden:
+Beispiel: http://localhost:3000/boards/2/cards
+
+board_cards GET    /boards/:board_id/cards(.:format)          cards#index
+                POST   /boards/:board_id/cards(.:format)          cards#create
+ new_board_card GET    /boards/:board_id/cards/new(.:format)      cards#new
+edit_board_card GET    /boards/:board_id/cards/:id/edit(.:format) cards#edit
+     board_card GET    /boards/:board_id/cards/:id(.:format)      cards#show
+                PATCH  /boards/:board_id/cards/:id(.:format)      cards#update
+                PUT    /boards/:board_id/cards/:id(.:format)      cards#update
+                DELETE /boards/:board_id/cards/:id(.:format)      cards#destroy
 
 
 === Changes in `cards_controller` ===
